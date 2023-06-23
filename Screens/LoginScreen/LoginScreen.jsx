@@ -35,7 +35,7 @@ import {
               <Image style={styles.addSvg} source={require("../ImageBackground/add.svg")}/>
               </View>
             </View>
-            <Text style={styles.textRegis}>Логін</Text>
+            <Text style={styles.textRegis}>Увійти</Text>
             <FormLogin/>
             <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
           <Text style={styles.text}>Вже є акаунт? Увійти</Text>
