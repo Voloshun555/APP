@@ -19,7 +19,9 @@ export const FormLogin = () => {
   const [email, setEmail] = useState("");
 
   const onLogin= () => {
+    e.preventDefault();
     Alert.alert(`"Credentials", ${email} + ${password}`)
+    console.log(`"Credentials", ${email} + ${password}`)
   }
 
 

@@ -28,8 +28,13 @@ export const FormRegistration = () => {
   //   setEmail('')
   // };
 
-  const onLogin = () => {
+  const onLogin = e => {
+    e.preventDefault();
     Alert.alert("Credentials", `${login} + ${email} + ${password}`);
+    console.log("Credentials", `${login} + ${email} + ${password}`)
+    setLogin('')
+    setPassword('')
+    setEmail('')
   };
 
 
