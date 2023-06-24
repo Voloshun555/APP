@@ -5,8 +5,12 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import  LoginScreen  from "./Screens/LoginScreen/LoginScreen.jsx";
+import * as font from "expo-font";
 
-
+const fonts = () => FontFace.loadAsync({
+  'rm-medium': require('./fonts/Roboto-Medium.ttf'),
+  'rm-regular': require('./fonts/Roboto-Regular.ttf')
+})
 
 const MainStack = createStackNavigator();
 

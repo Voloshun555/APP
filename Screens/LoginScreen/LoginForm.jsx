@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
+    
   },
   
   button_title: {

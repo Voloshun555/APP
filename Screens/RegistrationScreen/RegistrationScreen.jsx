@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   textRegis: {
     color: "#212121",
     marginBottom: 32,
-    // fontFamily: "Roboto",
+    fontFamily: "rm-medium",
     fontWeight: "500",
     fontSize: 30,
     lineHeight: 35,
