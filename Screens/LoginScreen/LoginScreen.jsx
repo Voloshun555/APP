@@ -13,9 +13,6 @@ import {
     Image,
   } from "react-native";
   import React from "react";
-  import background from "../ImageBackground/Photo BG.png";
-  import { useState } from "react";
-  import { StatusBar } from "expo-status-bar";
   import { FormLogin } from "./LoginForm";
   
  function LoginScreen({ navigation }) {

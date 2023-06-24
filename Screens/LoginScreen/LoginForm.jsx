@@ -4,11 +4,7 @@ import {
   Text,
   TextInput,
   View,
-  Button,
-  ImageBackground,
-  TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard,
   StyleSheet,
 } from "react-native";
 
