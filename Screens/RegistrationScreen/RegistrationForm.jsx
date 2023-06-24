@@ -4,12 +4,9 @@ import {
   Text,
   TextInput,
   View,
-  Button,
-  ImageBackground,
-  TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard,
   StyleSheet,
+  Alert,
 } from "react-native";
 
 export const FormRegistration = () => {
@@ -18,6 +15,24 @@ export const FormRegistration = () => {
   const [focusName, setFocusName] = useState(false);
   const [focusEmail, setFocusEmail] = useState(false);
   const [displayText, setDisplaytext] = useState("Показати");
+
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  
+  // const handleSubmitt = (e) => {
+  //   e.preventDefault();
+  //   setLogin('')
+  //   setPassword('')
+  //   setEmail('')
+  // };
+
+  const onLogin = () => {
+    Alert.alert("Credentials", `${login} + ${email} + ${password}`);
+  };
+
+
   useEffect(() => {
     setDisplaytext(showPassword ? "Показати" : "Приховати");
   }, [displayText, showPassword]);
@@ -26,9 +41,12 @@ export const FormRegistration = () => {
     setShowPassword(!showPassword);
   };
   return (
-    <Formik>
+    <Formik >
       <View style={styles.form}>
+        <View>
         <TextInput
+           value={login}
+          onChangeText={setLogin}
           style={[
             styles.input,
             focusName ? styles.inputOnFocus : styles.inputOnBlur,
@@ -39,6 +57,8 @@ export const FormRegistration = () => {
           placeholder="Логін"
         />
         <TextInput
+           value={email}
+          onChangeText={setEmail}
           name="email"
           style={[
             styles.input,
@@ -50,6 +70,8 @@ export const FormRegistration = () => {
         />
         <View style={styles.password_wrp}>
           <TextInput
+           value={password}
+            onChangeText={setPassword}
             name="password"
             style={[
               styles.input,
@@ -59,8 +81,6 @@ export const FormRegistration = () => {
             onBlur={() => setFocusPassword(false)}
             placeholder="Пароль"
             secureTextEntry={showPassword}
-            //   onChangeText={handleChange("password")}
-            //   value={values.password}
           />
           <TouchableOpacity
             style={styles.passwordShow}
@@ -68,10 +88,10 @@ export const FormRegistration = () => {
             <Text>{displayText}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={onLogin}>
           <Text style={styles.button_title}> Зареєстуватися</Text>
         </TouchableOpacity>
-        
+      </View>
       </View>
     </Formik>
   );
@@ -111,7 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
   },
-  
+
   button_title: {
     textAlign: "center",
     fontSize: 16,

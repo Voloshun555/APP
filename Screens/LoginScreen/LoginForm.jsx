@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Text,
   TextInput,
+  Alert,
   View,
   TouchableOpacity,
   StyleSheet,
@@ -13,6 +14,15 @@ export const FormLogin = () => {
   const [focusPassword, setFocusPassword] = useState(false);
   const [focusEmail, setFocusEmail] = useState(false);
   const [displayText, setDisplaytext] = useState("Показати");
+
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const onLogin= () => {
+    Alert.alert(`"Credentials", ${email} + ${password}`)
+  }
+
+
   useEffect(() => {
     setDisplaytext(showPassword ? "Показати" : "Приховати");
   }, [displayText, showPassword]);
@@ -24,6 +34,8 @@ export const FormLogin = () => {
     <Formik>
       <View style={styles.form}>
         <TextInput
+value={email}
+onChangeText={setEmail}
           name="email"
           style={[
             styles.input,
@@ -35,6 +47,8 @@ export const FormLogin = () => {
         />
         <View style={styles.password_wrp}>
           <TextInput
+          value={password}
+          onChangeText={setPassword}
             name="password"
             style={[
               styles.input,
@@ -51,7 +65,7 @@ export const FormLogin = () => {
             <Text>{displayText}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={onLogin}>
           <Text style={styles.button_title}> Логін</Text>
         </TouchableOpacity>
         

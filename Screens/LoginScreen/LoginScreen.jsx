@@ -80,7 +80,6 @@ import {
       color: "#212121",
       marginBottom: 32,
       fontFamily: "Inter-Black",
-      fontWeight: "500",
       fontSize: 30,
       lineHeight: 35,
     },

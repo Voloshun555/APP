@@ -1,5 +1,4 @@
 
-import { StyleSheet, Text, View } from "react-native";
 import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
