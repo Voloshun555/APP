@@ -32,7 +32,7 @@ export const FormRegistration = ({ navigation }) => {
     setLogin("");
     setPassword("");
     setEmail("");
-    navigation.navigate("Home")
+    // navigation.navigate("Home")
   };
 
   useEffect(() => {
