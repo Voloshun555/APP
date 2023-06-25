@@ -25,7 +25,7 @@ export const FormRegistration = ({ navigation }) => {
     if (!email || !password || !login) {
       Alert.alert(`Заповніть форму регістрації пожалуйста`)
     } else {
-      // Alert.alert("Credentials", `${login} + ${email} + ${password}`);
+     Alert.alert("Credentials", `${login} + ${email} + ${password}`);
     }
     
     console.log("Credentials", `${login} + ${email} + ${password}`);
