@@ -18,7 +18,7 @@ import SvgAdd from "../image/svgAdd";
 function RegistrationScreen({ navigation }) {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : ""}
       style={styles.Avoiding}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>

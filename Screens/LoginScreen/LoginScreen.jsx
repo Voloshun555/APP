@@ -19,7 +19,7 @@ import {
  function LoginScreen({ navigation }) {
 
     return (
-      <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"}
+      <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : ""}
       style={styles.Avoiding}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
