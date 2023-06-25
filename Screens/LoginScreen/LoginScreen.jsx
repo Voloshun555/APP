@@ -14,6 +14,7 @@ import {
   } from "react-native";
   import React from "react";
   import { FormLogin } from "./LoginForm";
+  import SvgAdd from '../image/svgAdd'
   
  function LoginScreen({ navigation }) {
 
@@ -29,7 +30,7 @@ import {
             <View style={styles.avatarImg}>
               <View style={styles.avatar}></View>
               <View>
-              <Image style={styles.addSvg} source={require("../ImageBackground/add.svg")}/>
+              <SvgAdd style={styles.addSvg}></SvgAdd>
               </View>
             </View>
             <Text style={styles.textRegis}>Увійти</Text>

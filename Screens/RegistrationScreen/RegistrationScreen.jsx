@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import React from "react";
 import { FormRegistration } from "./RegistrationForm";
-import svgIcon from "../ImageBackground/add.svg";
+import SvgAdd from "../image/svgAdd";
 
 function RegistrationScreen({ navigation }) {
   return (
@@ -29,10 +29,9 @@ function RegistrationScreen({ navigation }) {
               <View style={styles.avatarImg}>
                 <View style={styles.avatar}></View>
                 <View>
-                  <Image
-                    style={styles.addSvg}
-                    source={require("../ImageBackground/add.svg")}
-                  />
+                  <SvgAdd
+                    style={styles.addSvg} 
+                  ></SvgAdd>
                 </View>
               </View>
               <Text style={styles.textRegis}>Регістрація</Text>
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
   addSvg: {
     width: 25,
     height: 25,
-    backgroundColor: "red",
     position: "absolute",
     top: "10%",
 

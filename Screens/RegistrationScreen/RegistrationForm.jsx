@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 
-export const FormRegistration = () => {
+export const FormRegistration = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(true);
   const [focusPassword, setFocusPassword] = useState(false);
   const [focusName, setFocusName] = useState(false);
@@ -25,13 +25,14 @@ export const FormRegistration = () => {
     if (!email || !password || !login) {
       Alert.alert(`Заповніть форму регістрації пожалуйста`)
     } else {
-      Alert.alert("Credentials", `${login} + ${email} + ${password}`);
+      // Alert.alert("Credentials", `${login} + ${email} + ${password}`);
     }
     
     console.log("Credentials", `${login} + ${email} + ${password}`);
     setLogin("");
     setPassword("");
     setEmail("");
+    navigation.navigate("Home")
   };
 
   useEffect(() => {
