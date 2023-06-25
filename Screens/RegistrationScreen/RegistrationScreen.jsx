@@ -9,37 +9,41 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Platform,
-  Image
+  Image,
 } from "react-native";
 import React from "react";
 import { FormRegistration } from "./RegistrationForm";
+import svgIcon from "../ImageBackground/add.svg";
 
 function RegistrationScreen({ navigation }) {
   return (
-    <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"}
-    style={styles.Avoiding}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.Avoiding}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.backImage}
-        source={require("../ImageBackground/Photo BG.png")}>
-        <View style={styles.containerForm}>
-          <View style={styles.avatarImg}>
-            <View style={styles.avatar}></View>
-            <View>
-              <Image style={styles.addSvg} source={require("../ImageBackground/add.svg")}/>
+        <View style={styles.container}>
+          <ImageBackground
+            style={styles.backImage}
+            source={require("../ImageBackground/PhotoBG.png")}>
+            <View style={styles.containerForm}>
+              <View style={styles.avatarImg}>
+                <View style={styles.avatar}></View>
+                <View>
+                  <Image
+                    style={styles.addSvg}
+                    source={require("../ImageBackground/add.svg")}
+                  />
+                </View>
+              </View>
+              <Text style={styles.textRegis}>Регістрація</Text>
+              <FormRegistration />
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+              </TouchableOpacity>
             </View>
-          </View>
-          <Text style={styles.textRegis}>Регістрація</Text>
-          <FormRegistration />
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-        </TouchableOpacity>
+          </ImageBackground>
         </View>
-        
-      </ImageBackground>
-    </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 }
@@ -47,18 +51,17 @@ const styles = StyleSheet.create({
   Avoiding: {
     flex: 1,
   },
-  addSvg:{
-    width:25,
-    height:25,
-    
+  addSvg: {
+    width: 25,
+    height: 25,
+    backgroundColor: "red",
     position: "absolute",
     top: "10%",
 
     transform: [{ translateX: 107 }, { translateY: -40 }],
-    
   },
 
-  avatar:{
+  avatar: {
     width: 120,
     height: 120,
     backgroundColor: "#F6F6F6",

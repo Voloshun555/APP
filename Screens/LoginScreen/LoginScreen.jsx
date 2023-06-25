@@ -24,7 +24,7 @@ import {
       <View style={styles.container}>
         <ImageBackground
           style={styles.backImage}
-          source={require("../ImageBackground/Photo BG.png")}>
+          source={require("../ImageBackground/PhotoBG.png")}>
           <View style={styles.containerForm}>
             <View style={styles.avatarImg}>
               <View style={styles.avatar}></View>

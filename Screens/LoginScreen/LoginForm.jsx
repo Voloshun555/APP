@@ -18,12 +18,17 @@ export const FormLogin = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const onLogin= () => {
+  const onLogin = (e) => {
     e.preventDefault();
-    Alert.alert(`"Credentials", ${email} + ${password}`)
-    console.log(`"Credentials", ${email} + ${password}`)
-  }
-
+    if (!email || !password) {
+      Alert.alert(`Заповніть форму входа`);
+    } else {
+      Alert.alert(`"Credentials", ${email} + ${password}`);
+    }
+    console.log(`"Credentials", ${email} + ${password}`);
+    setPassword("");
+    setEmail("");
+  };
 
   useEffect(() => {
     setDisplaytext(showPassword ? "Показати" : "Приховати");
@@ -36,8 +41,8 @@ export const FormLogin = () => {
     <Formik>
       <View style={styles.form}>
         <TextInput
-value={email}
-onChangeText={setEmail}
+          value={email}
+          onChangeText={setEmail}
           name="email"
           style={[
             styles.input,
@@ -49,8 +54,8 @@ onChangeText={setEmail}
         />
         <View style={styles.password_wrp}>
           <TextInput
-          value={password}
-          onChangeText={setPassword}
+            value={password}
+            onChangeText={setPassword}
             name="password"
             style={[
               styles.input,
@@ -68,9 +73,8 @@ onChangeText={setEmail}
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.button} onPress={onLogin}>
-          <Text style={styles.button_title}> Логін</Text>
+          <Text style={styles.button_title}>Увійти</Text>
         </TouchableOpacity>
-        
       </View>
     </Formik>
   );
@@ -109,9 +113,8 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
-    
   },
-  
+
   button_title: {
     textAlign: "center",
     fontSize: 16,
