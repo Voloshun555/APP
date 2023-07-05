@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export const FormLogin = () => {
+  const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(true);
   const [focusPassword, setFocusPassword] = useState(false);
   const [focusEmail, setFocusEmail] = useState(false);
@@ -28,6 +30,7 @@ export const FormLogin = () => {
     console.log(`"Credentials", ${email} + ${password}`);
     setPassword("");
     setEmail("");
+    navigation.navigate("Home")
   };
 
   useEffect(() => {

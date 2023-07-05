@@ -8,8 +8,10 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export const FormRegistration = ({ navigation }) => {
+export const FormRegistration = () => {
+  const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(true);
   const [focusPassword, setFocusPassword] = useState(false);
   const [focusName, setFocusName] = useState(false);
@@ -27,12 +29,11 @@ export const FormRegistration = ({ navigation }) => {
     } else {
      Alert.alert("Credentials", `${login} + ${email} + ${password}`);
     }
-    
     console.log("Credentials", `${login} + ${email} + ${password}`);
     setLogin("");
     setPassword("");
     setEmail("");
-    // navigation.navigate("Home")
+     navigation.navigate("Home")
   };
 
   useEffect(() => {
