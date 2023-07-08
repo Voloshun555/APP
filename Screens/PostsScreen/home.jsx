@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons, } from "@expo/vector-icons";
 import { NewPublication } from "./newPublication";
 import { CreatePostsScreen } from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
@@ -46,6 +46,8 @@ export const Home = () => {
             return null;
           }
         },
+      
+
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -58,6 +60,8 @@ export const Home = () => {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+
+        headerTitleAlign: "center",
         tabBarShowLabel: false,
         tabBarItemStyle: {
           borderRadius: 25,
@@ -72,7 +76,15 @@ export const Home = () => {
         activeBackgroundColor: "#FF6C00",
       }}>
       <Tabs.Screen name="Публікації" component={NewPublication} />
-      <Tabs.Screen name="Створити публікацію" component={CreatePostsScreen} />
+      <Tabs.Screen
+        name="Створити публікацію"
+        component={CreatePostsScreen}
+        options={{
+          tabBarStyle: {
+            display: "none",
+          },
+        }}
+      />
       <Tabs.Screen
         name="Профіль"
         component={ProfileScreen}

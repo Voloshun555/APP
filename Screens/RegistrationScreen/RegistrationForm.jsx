@@ -44,6 +44,7 @@ export const FormRegistration = () => {
     setShowPassword(!showPassword);
   };
   return (
+    
     <Formik>
       <View style={styles.form}>
         <View>

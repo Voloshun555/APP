@@ -40,8 +40,9 @@ export function ProfileScreen({ navigation }) {
                     }}
                   />
                 </View>
-
-                <Text>Профіль</Text>
+              </View>
+              <View style={styles.userNameContainer}>
+                <Text style={styles.userText}>User Name</Text>
               </View>
             </View>
           </ImageBackground>
@@ -86,13 +87,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
   },
-  textRegis: {
-    color: "#212121",
-    marginBottom: 32,
-    fontFamily: "Inter-Black",
-    fontSize: 30,
-    lineHeight: 35,
-  },
   backImage: {
     flex: 1,
     justifyContent: "flex-end",
@@ -105,5 +99,13 @@ const styles = StyleSheet.create({
     width: " 100%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  userNameContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  userText: {
+    color: "#212121",
+    fontSize: 30,
   },
 });

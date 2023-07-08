@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Platform,
   Image,
+  
 } from "react-native";
 import React from "react";
 import { FormRegistration } from "./RegistrationForm";
@@ -49,6 +50,7 @@ function RegistrationScreen({ navigation }) {
 const styles = StyleSheet.create({
   Avoiding: {
     flex: 1,
+    width: '100%'
   },
   addSvg: {
     width: 25,
