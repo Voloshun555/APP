@@ -7,45 +7,44 @@ import {
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Entypo, Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
+import * as MediaLibrary from "expo-media-library";
 
 export function CreatCamera(props) {
-  const { cameraStatus, setCameraStatus } = props;
+  const {
+    cameraStatus,
+    setCameraStatus,
+    urlPhoto,
+    setUrlPhoto,
+    hasPermission = null,
+  } = props;
   const [cameraRef, setCameraRef] = useState(null);
-  const [urlPhoto, setUrlPhoto] = useState(null);
-
   const [type, setType] = useState(CameraType.back);
-  const takePhoto = async () => {
-    const takePhotoRef = await cameraRef.takePictureAsync();
-    setUrlPhoto(takePhotoRef.uri);
-  };
+
 
   return (
     <>
-      {urlPhoto && (
-        <View>
-          <ImageBackground
-            source={{ uri: urlPhoto }}
-            style={{ width: "100%", height: "100%" }}>
-              <View style={styles.containerBtn}>
-                <TouchableOpacity
-              onPress={() => {
-                setCameraStatus(false);
-              }}>
-              <MaterialIcons
-                name="add-photo-alternate"
-                size={32}
-                color="white"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setUrlPhoto(null);
-              }}>
-              <Entypo name="back" size={32} color="white" />
-            </TouchableOpacity>
+      {urlPhoto && hasPermission && (
+        <View style={{ zIndex: 1 }}>
+          <ImageBackground source={{ uri: urlPhoto }} style={styles.background}>
+            <View style={styles.containerBtnBackground}>
+              <TouchableOpacity
+                onPress={() => {
+                  setCameraStatus(false);
+                }}>
+                <MaterialIcons
+                  name="add-photo-alternate"
+                  size={32}
+                  color="white"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setUrlPhoto(null);
+                }}>
+                <Entypo name="cw" size={32} color="white" />
+              </TouchableOpacity>
             </View>
-            
           </ImageBackground>
         </View>
       )}
@@ -72,10 +71,12 @@ export function CreatCamera(props) {
 
               <TouchableOpacity
                 onPress={async () => {
-                  if (cameraRef) {
-                    await takePhoto();
-                  }
-                }}
+              if (cameraRef) {
+                const { uri } = await cameraRef.takePictureAsync();
+                await MediaLibrary.createAssetAsync(uri);
+                setUrlPhoto(uri)
+              }
+            }}
                 style={styles.snapContainer}>
                 <Feather
                   name="camera"
@@ -151,6 +152,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     marginBottom: 20,
+  },
+  containerBtnBackground: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "space-around",
+    marginBottom: 15,
+  },
+  background: {
+    width: "100%",
+    height: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "flex-end",
   },
 });
 

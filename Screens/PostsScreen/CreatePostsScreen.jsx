@@ -1,62 +1,76 @@
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  useWindowDimensions,
-} from "react-native";
+import { Text, View, TouchableOpacity, ImageBackground } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { FormCamera } from "./formCamera";
 import { CreatCamera } from "../creatCamera/CreatCamera";
 import { useEffect, useState } from "react";
-// import { Camera } from 'expo-camera';
-// import * as MediaLibrary from 'expo-media-library';
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+
+import { pickImage } from "../pickImage/PickImage";
 
 export function CreatePostsScreen() {
+  const [hasPermission, setHasPermission] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(false);
+  const [urlPhoto, setUrlPhoto] = useState(null);
 
-   
+  useEffect(() => {
+    (async () => {
+      const { status: cameraStatus } =
+        await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status: cameraStatus } =
-  //       await Camera.requestCameraPermissionsAsync();
-  //     // const { status: locationStatus } =
-  //     //   // await Location.requestForegroundPermissionsAsync();
-  //     // // await MediaLibrary.requestPermissionsAsync();
-  //     setHasPermission(
-  //       cameraStatus === 'granted'
-  //       // && locationStatus === 'granted'
-  //     );
-  //   })();
-  // }, []);
+      setHasPermission(cameraStatus === "granted");
+    })();
+  }, []);
+
+  const onImagePick = async () => {
+    const result = await pickImage();
+    const imageUrl = result?.assets[0].uri || null;
+    setUrlPhoto(imageUrl);
+  };
 
   return (
     <>
-    <CreatCamera cameraStatus={cameraStatus} setCameraStatus={setCameraStatus} />
-    {!cameraStatus && (<View style={styles.container}>
-        <View style={styles.FotoContainer}>
-          <View style={styles.IconContainerCamera}>
-            <TouchableOpacity onPress={() => setCameraStatus(true)} style={styles.iconCameraContauner}>
-              <Feather
-                name="camera"
-                size={24}
-                color="#BDBDBD"
-                style={styles.iconCamera}
-              />
+      <CreatCamera
+        cameraStatus={cameraStatus}
+        setCameraStatus={setCameraStatus}
+        setUrlPhoto={setUrlPhoto}
+        urlPhoto={urlPhoto}
+        hasPermission={hasPermission}
+      />
+      {!cameraStatus && (
+        <View style={styles.container}>
+          <ImageBackground
+            style={styles.FotoContainer}
+            source={{
+              uri: urlPhoto
+            }}>
+            <View style={styles.IconContainerCamera}>
+              <TouchableOpacity
+                onPress={() => setCameraStatus(true)}
+                style={styles.iconCameraContauner}>
+                <Feather
+                  name="camera"
+                  size={24}
+                  color="#BDBDBD"
+                  style={styles.iconCamera}
+                />
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+          <TouchableOpacity onPress={onImagePick}>
+            <Text>Завантажте фото</Text>
+          </TouchableOpacity>
+
+          <FormCamera />
+          <View style={styles.deleteContainer}>
+            <TouchableOpacity style={styles.deleteIcon}>
+              <AntDesign name="delete" size={20} color="black" />
             </TouchableOpacity>
           </View>
         </View>
-        <Text>Завантажте фото</Text>
-        <FormCamera />
-        <View style={styles.deleteContainer}>
-          <TouchableOpacity style={styles.deleteIcon}>
-            <AntDesign name="delete" size={20} color="black" />
-          </TouchableOpacity>
-        </View>
-      </View>)}
-      
+      )}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { TextInput, View,TouchableOpacity ,ScrollView} from "react-native";
+import { Entypo } from '@expo/vector-icons'; 
 
 export function FormCamera() {
   return (
@@ -16,7 +17,7 @@ export function FormCamera() {
         style={{
           ...styles.inputContanier,
         }}>
-        <TextInput placeholder="Місцевість..." style={styles.input} />
+        <TextInput  style={styles.input}><Entypo name="location-pin" size={24} color="grey" /> Місцевість...</TextInput>
       </View>
 <TouchableOpacity style={styles.addPhotoContainer}>
 <Text style={styles.addTextPhoto}>Опублікувати</Text>
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   input: {
-    fontFamily: "roboto-regular",
     fontSize: 16,
     lineHeight: 19,
     color: "#BDBDBD",
