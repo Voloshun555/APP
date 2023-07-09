@@ -6,13 +6,19 @@ import { CreatCamera } from "../creatCamera/CreatCamera";
 import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-
 import { pickImage } from "../pickImage/PickImage";
+const initState = {
+  
+ 
+ 
+};
 
-export function CreatePostsScreen() {
+export function CreatePostsScreen({ navigation }) {
+  const [form, setForm] = useState(initState);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(false);
-  const [urlPhoto, setUrlPhoto] = useState(null);
+  // const [urlPhoto, setUrlPhoto] = useState(null);
+  const { imageUrl: photo } = form;
 
   useEffect(() => {
     (async () => {
@@ -27,7 +33,12 @@ export function CreatePostsScreen() {
   const onImagePick = async () => {
     const result = await pickImage();
     const imageUrl = result?.assets[0].uri || null;
-    setUrlPhoto(imageUrl);
+
+    setForm((prev) => ({
+           ...prev,
+           imageUrl,
+    
+         }));
   };
 
   return (
@@ -35,17 +46,15 @@ export function CreatePostsScreen() {
       <CreatCamera
         cameraStatus={cameraStatus}
         setCameraStatus={setCameraStatus}
-        setUrlPhoto={setUrlPhoto}
-        urlPhoto={urlPhoto}
         hasPermission={hasPermission}
+        photo={form.imageUrl}
+        setForm={setForm}
       />
       {!cameraStatus && (
         <View style={styles.container}>
           <ImageBackground
             style={styles.FotoContainer}
-            source={{
-              uri: urlPhoto
-            }}>
+            source={{ uri: form.imageUrl  }}>
             <View style={styles.IconContainerCamera}>
               <TouchableOpacity
                 onPress={() => setCameraStatus(true)}
@@ -65,7 +74,12 @@ export function CreatePostsScreen() {
 
           <FormCamera />
           <View style={styles.deleteContainer}>
-            <TouchableOpacity style={styles.deleteIcon}>
+            <TouchableOpacity
+              style={styles.deleteIcon}
+              onPress={() => {
+                setForm("");
+                navigation.navigate("Публікації");
+              }}>
               <AntDesign name="delete" size={20} color="black" />
             </TouchableOpacity>
           </View>

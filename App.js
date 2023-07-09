@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import {Home} from "./Screens/PostsScreen/home";
 
 
+
 const MainStack = createStackNavigator();
 
 export default function App(   ) {

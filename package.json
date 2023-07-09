@@ -24,6 +24,7 @@
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.71.8",
+    "react-native-debug": "^3.0.0",
     "react-native-formik": "^1.7.8",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-image-crop-picker": "^0.40.0",

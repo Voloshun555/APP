@@ -7,44 +7,49 @@ import {
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Entypo, Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import {  useState } from "react";
-import * as MediaLibrary from "expo-media-library";
+import { useEffect, useState } from "react";
+
 
 export function CreatCamera(props) {
-  const {
-    cameraStatus,
-    setCameraStatus,
-    urlPhoto,
-    setUrlPhoto,
-    hasPermission = null,
-  } = props;
+  const { cameraStatus, setCameraStatus,  photo, setForm, } = props;
   const [cameraRef, setCameraRef] = useState(null);
+  // const [urlPhoto, setUrlPhoto] = useState(null);
+
   const [type, setType] = useState(CameraType.back);
 
+  const takePhoto = async () => {
+    const takePhotoRef = await cameraRef.takePictureAsync();
+    setForm((prev) => ({ ...prev, imageUrl: takePhotoRef.uri }));
+   
+  };
 
   return (
     <>
-      {urlPhoto && hasPermission && (
-        <View style={{ zIndex: 1 }}>
-          <ImageBackground source={{ uri: urlPhoto }} style={styles.background}>
-            <View style={styles.containerBtnBackground}>
-              <TouchableOpacity
-                onPress={() => {
-                  setCameraStatus(false);
-                }}>
-                <MaterialIcons
-                  name="add-photo-alternate"
-                  size={32}
-                  color="white"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setUrlPhoto(null);
-                }}>
-                <Entypo name="cw" size={32} color="white" />
-              </TouchableOpacity>
+      {cameraStatus && photo && (
+        <View style={{zIndex: 1,}}>
+          <ImageBackground
+            source={{uri: photo }}
+             style={styles.background}>
+              <View style={styles.containerBtnBackground}>
+                <TouchableOpacity
+              onPress={() => {
+               
+                setCameraStatus(false);
+              }}>
+              <MaterialIcons
+                name="add-photo-alternate"
+                size={32}
+                color="white"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setForm((prev) => ({ ...prev, imageUrl: null }));
+              }}>
+              <Entypo name="cw" size={32} color="white" />
+            </TouchableOpacity>
             </View>
+            
           </ImageBackground>
         </View>
       )}
@@ -70,13 +75,7 @@ export function CreatCamera(props) {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={async () => {
-              if (cameraRef) {
-                const { uri } = await cameraRef.takePictureAsync();
-                await MediaLibrary.createAssetAsync(uri);
-                setUrlPhoto(uri)
-              }
-            }}
+                onPress={takePhoto}
                 style={styles.snapContainer}>
                 <Feather
                   name="camera"
@@ -153,20 +152,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     marginBottom: 20,
   },
-  containerBtnBackground: {
-    flexDirection: "row",
+  containerBtnBackground:{
+    flexDirection: 'row',
     alignItems: "center",
-    flex: 1,
-    justifyContent: "space-around",
-    marginBottom: 15,
+   flex: 1,
+   justifyContent: 'space-around',
+   marginBottom: 20
   },
-  background: {
-    width: "100%",
-    height: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "flex-end",
-  },
+  background:{
+    width: '100%',
+    height: '100%', 
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'flex-end',
+  }
 });
 
 // import { View, TouchableOpacity, Text, StyleSheet,ImageBackground } from "react-native";
