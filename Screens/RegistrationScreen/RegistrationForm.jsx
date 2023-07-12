@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   form: {
-    display: "flex",
     justifyContent: "space-between",
     width: "100%",
     marginBottom: 16,

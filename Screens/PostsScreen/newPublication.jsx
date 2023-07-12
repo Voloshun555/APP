@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { UserInfo } from "./userInfo";
 import { useEffect, useState } from "react";
-import { FontAwesome , MaterialCommunityIcons} from '@expo/vector-icons'; 
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export const NewPublication = ({ route, navigation }) => {
   const [items, setItems] = useState([]);
@@ -24,29 +24,39 @@ export const NewPublication = ({ route, navigation }) => {
     <ScrollView style={styles.container}>
       <UserInfo />
       <FlatList
-      
+      style={styles.containerFlatList}
         data={items}
         renderItem={({ item }) => (
-          <View style={{marginTop: 32, flex: 1}}>
+          <View style={{ marginTop: 32, flex: 1 }}>
             <View>
               <Image
                 source={{ uri: item.form.imageUrl }}
                 style={styles.photo}
               />
-              <Text>{item.name}</Text>
+              <Text style={{ marginTop: 10, marginBottom: 10 }}>
+                Name: {item.name}
+              </Text>
             </View>
-            <TouchableOpacity >
-            <FontAwesome name="comments-o" size={24} color="black" />
-              <Text>0</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <MaterialCommunityIcons
+            <View style={styles.navContainer}>
+              <TouchableOpacity style={styles.comentarContainer}>
+                <FontAwesome name="comments-o" size={24} color="black" />
+                <Text>0</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.locationContainer}
+                onPress={() =>
+                  navigation.navigate("MapScrean", {
+                    location: item.locationPhoto,
+                  })
+                }>
+                <MaterialCommunityIcons
                   name="map-marker-outline"
                   size={24}
                   color="#BDBDBD"
                 />
                 <Text>{item.locationName}</Text>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
@@ -54,6 +64,10 @@ export const NewPublication = ({ route, navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  containerFlatList:{
+    flex: 1,
+    paddingBottom: 40,
+  },
   photo: {
     height: 240,
     width: "auto",
@@ -66,5 +80,20 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     paddingBottom: 22,
     backgroundColor: "#ffffff",
+  },
+  comentarContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 6,
+  },
+  locationContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 4,
+  },
+  navContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

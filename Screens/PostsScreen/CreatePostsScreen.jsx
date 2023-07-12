@@ -16,7 +16,7 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { pickImage } from "../pickImage/PickImage";
 import * as Location from "expo-location";
-import MapView, { Marker } from "react-native-maps";
+
 
 
 export function CreatePostsScreen({ navigation }) {
@@ -30,7 +30,7 @@ export function CreatePostsScreen({ navigation }) {
   // const [urlPhoto, setUrlPhoto] = useState(null);
   // const { imageUrl: photo } = form;
   function ClearPost() {
-    setLocation(null);
+    setLocationName(null);
     setName(null);
     setForm("");
   }
@@ -137,10 +137,10 @@ export function CreatePostsScreen({ navigation }) {
                 ...styles.inputContanier,
               }}>
               <TextInput
-                placeholder="Місцевість..."
+                placeholder="Місцевість....."
                 value={locationName}
                 onChangeText={setLocationName}
-                style={styles.input}
+                style={styles.inputLocal}
               />
               <Entypo
                 name="location-pin"
@@ -196,12 +196,22 @@ color: '#FFFFFF'
     color: "#BDBDBD",
     width: "100%",
     height: 50,
+   
+  },
+  inputLocal:{
+    borderBottomWidth: 1,
+    fontSize: 16,
+    borderBottomColor: "#E8E8E8",
+    lineHeight: 19,
+    color: "#BDBDBD",
+    width: "100%",
+    height: 50,
+    paddingLeft: 32
   },
   marker: {
     flex: 1,
     position: "absolute",
     marginTop: 13,
-    marginLeft: 90,
   },
   addPhotoContainer: {
     backgroundColor: "#F6F6F6",

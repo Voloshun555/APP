@@ -1,11 +1,11 @@
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import { Feather, Ionicons, } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { NewPublication } from "./newPublication";
 import { CreatePostsScreen } from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
-import { StyleSheet } from "react-native";
+
 
 const Tabs = createBottomTabNavigator();
 export const Home = () => {
@@ -46,7 +46,6 @@ export const Home = () => {
             return null;
           }
         },
-      
 
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;

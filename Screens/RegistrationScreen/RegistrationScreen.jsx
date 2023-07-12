@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Platform,
   Image,
-  
+  ScrollView,
 } from "react-native";
 import React from "react";
 import { FormRegistration } from "./RegistrationForm";
@@ -37,7 +37,7 @@ function RegistrationScreen({ navigation }) {
               </View>
               <Text style={styles.textRegis}>Регістрація</Text>
               <FormRegistration />
-              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <TouchableOpacity  onPress={() => navigation.navigate("Login")}>
                 <Text style={styles.text}>Вже є акаунт? Увійти</Text>
               </TouchableOpacity>
             </View>
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
+    
   },
   textRegis: {
     color: "#212121",
