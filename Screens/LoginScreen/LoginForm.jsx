@@ -23,9 +23,9 @@ export const FormLogin = () => {
   const onLogin = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      Alert.alert(`Заповніть форму входа`);
+      console.log(`Заповніть форму входа`);
     } else {
-      Alert.alert(`"Credentials", ${email} + ${password}`);
+      console.log(`"Credentials", ${email} + ${password}`);
     }
     console.log(`"Credentials", ${email} + ${password}`);
     setPassword("");

@@ -1,10 +1,10 @@
-import { Text,View, StyleSheet } from "react-native"
+import { Text,View, StyleSheet,FlatList } from "react-native"
 import { UserInfo } from "./userInfo";
 
 export const NewPublication = () => {
     return (
         <View style={styles.container}>
-         <UserInfo/>
+           <UserInfo/>
         </View>
       );
     };
