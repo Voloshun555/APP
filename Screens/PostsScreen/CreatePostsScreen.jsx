@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { AntDesign, Feather, Entypo } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
-import { FormCamera } from "./formCamera";
 import { CreatCamera } from "../creatCamera/CreatCamera";
 import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
@@ -132,10 +131,7 @@ export function CreatePostsScreen({ navigation }) {
                 style={styles.input}
               />
             </View>
-            <View
-              style={{
-                ...styles.inputContanier,
-              }}>
+            <View>
               <TextInput
                 placeholder="Місцевість....."
                 value={locationName}

@@ -13,7 +13,6 @@ import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export const NewPublication = ({ route, navigation }) => {
   const [items, setItems] = useState([]);
-  console.log(route.params);
   useEffect(() => {
     if (route.params) {
       setItems((prev) => [...prev, route.params]);
@@ -38,17 +37,17 @@ export const NewPublication = ({ route, navigation }) => {
               </Text>
             </View>
             <View style={styles.navContainer}>
-              <TouchableOpacity style={styles.comentarContainer}>
+              <TouchableOpacity style={styles.comentarContainer}onPress={() =>
+                  navigation.navigate("Comments", {
+                    location: item.form.imageUrl,
+                  })
+                }>
                 <FontAwesome name="comments-o" size={24} color="black" />
                 <Text>0</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.locationContainer}
-                onPress={() =>
-                  navigation.navigate("MapScrean", {
-                    location: item.locationPhoto,
-                  })
-                }>
+                >
                 <MaterialCommunityIcons
                   name="map-marker-outline"
                   size={24}
