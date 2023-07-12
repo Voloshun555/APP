@@ -18,26 +18,42 @@ import { pickImage } from "../pickImage/PickImage";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 
-const initState = {
-  imageUrl: null,
-  name: "",
-  locality: "",
-};
 
 export function CreatePostsScreen({ navigation }) {
-  const [form, setForm] = useState(initState);
+  const [form, setForm] = useState("");
   const [location, setLocation] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(false);
+  const [name, setName] = useState(null);
+  const [locationName, setLocationName] = useState(null);
+  const [locationPhoto, setLocationPhoto] = useState(null);
   // const [urlPhoto, setUrlPhoto] = useState(null);
   // const { imageUrl: photo } = form;
-  console.log(form)
+  function ClearPost() {
+    setLocation(null);
+    setName(null);
+    setForm("");
+  }
 
-  const onFormSubmit = () => {
+  async function sendPost() {
+    const location = await Location.getCurrentPositionAsync({});
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
 
-    setForm(initState);
-    // navigation.navigate("Публікації");
-  };
+    setLocationPhoto(coords);
+
+    navigation.navigate("Публікації", {
+      form,
+      locationName,
+      name,
+      locationPhoto,
+    });
+    setForm("");
+    setName(null);
+    setLocationName(null);
+  }
 
   useEffect(() => {
     (async () => {
@@ -54,7 +70,7 @@ export function CreatePostsScreen({ navigation }) {
         console.log("Permission to access location was denied");
       }
       let location = await Location.getCurrentPositionAsync({});
-      
+
       const coords = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -110,10 +126,8 @@ export function CreatePostsScreen({ navigation }) {
                 ...styles.inputContanier,
               }}>
               <TextInput
-                onChangeText={(value) =>
-                  setForm((prev) => ({ ...prev, name: value }))
-                }
-                value={form.name}
+                onChangeText={setName}
+                value={name}
                 placeholder="Name..."
                 style={styles.input}
               />
@@ -122,30 +136,39 @@ export function CreatePostsScreen({ navigation }) {
               style={{
                 ...styles.inputContanier,
               }}>
-              <TextInput 
-              
-              style={styles.input}>
-                <Entypo name="location-pin" size={24} color="grey" />{" "}
-                Місцевість...
-              </TextInput>
+              <TextInput
+                placeholder="Місцевість..."
+                value={locationName}
+                onChangeText={setLocationName}
+                style={styles.input}
+              />
+              <Entypo
+                name="location-pin"
+                size={24}
+                color="grey"
+                style={styles.marker}
+              />
             </View>
             <TouchableOpacity
-            onPress={onFormSubmit}
-            style={styles.addPhotoContainer}>
-              <Text style={styles.addTextPhoto}>Опублікувати</Text>
+              onPress={sendPost}
+              disabled={!name && !form && !locationName}
+              style={[
+                !name || !form || !locationName
+                  ? styles.addPhotoContainer
+                  : styles.AddBackColor,
+              ]}>
+              <Text style={[
+                !name || !form || !locationName
+                  ? styles.addTextPhoto
+                  : styles.AddRextColor,
+              ]}>Опублікувати</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.deleteContainer}>
-            <TouchableOpacity
-              style={styles.deleteIcon}
-              onPress={() => {
-                setForm("");
-                navigation.navigate("Публікації");
-              }}>
+            <TouchableOpacity style={styles.deleteIcon} onPress={ClearPost}>
               <AntDesign name="delete" size={20} color="black" />
             </TouchableOpacity>
           </View>
-          
         </View>
       )}
     </>
@@ -153,12 +176,32 @@ export function CreatePostsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  AddBackColor: {
+    backgroundColor: "#FF6C00",
+    height: 40,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 50,
+    color: "#FFFFFF",
+  },
+  AddRextColor:{
+color: '#FFFFFF'
+  },
   input: {
+    borderBottomWidth: 1,
     fontSize: 16,
+    borderBottomColor: "#E8E8E8",
     lineHeight: 19,
     color: "#BDBDBD",
     width: "100%",
     height: 50,
+  },
+  marker: {
+    flex: 1,
+    position: "absolute",
+    marginTop: 13,
+    marginLeft: 90,
   },
   addPhotoContainer: {
     backgroundColor: "#F6F6F6",
@@ -166,6 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 50,
   },
   addTextPhoto: {
     color: "#BDBDBD",
@@ -209,7 +253,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   deleteContainer: {
-    flex:1,
+    flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
   },
