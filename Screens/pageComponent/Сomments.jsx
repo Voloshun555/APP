@@ -1,72 +1,124 @@
 import { useState } from "react";
 import { StyleSheet } from "react-native";
-import { Text, View, Image, FlatList, TextInput,TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  ImageBackground,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 export function Comments({ route }) {
-  const [text, setText] = useState(null);
+  const [textInput, setTextInput] = useState("");
+  const [Massege, setMassege] = useState([]);
 
-  console.log(route.params.location);
+  const addMassege = () => {
+    setMassege([...Massege, textInput]);
+    setTextInput("");
+  };
 
   return (
     <View style={styles.container}>
-      <View>
-        <Image source={{ uri: route.params.location }} style={styles.photo} />
-      </View>
-      <View  style={styles.inputContainer}>
-        <TextInput
-          placeholder="Коментувати..."
-          style={styles.input}
-          value={text}
-          onPress={setText}
+      <View style={styles.image}>
+        <ImageBackground
+          source={{ uri: route.params.location }}
+          style={{ flex: 1, width: "100%", height: "100%" }}
         />
-        <View style={{position: 'absolute', transform: [{ translateX: 320 }, { translateY: -15 }]}}><TouchableOpacity style={styles.inputBtn}>
-              <AntDesign name="arrowup" size={24} color="#FFF" style={styles.arrowBtn} />
-            </TouchableOpacity></View>
-         
+      </View>
+
+      <FlatList
+        data={Massege}
+      
+        renderItem={({ item }) => (
+          <View style={[styles.commentBlock]}>
+            <View style={styles.comment}>
+              <Text style={styles.commentText}>{item}</Text>
+            </View>
+          </View>
+        )}
+      />
+      
+      <View style={styles.inputBlock}>
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setTextInput(value)}
+          value={textInput}
+          textAlign={"left"}
+          placeholderTextColor={"#bdbdbd"}
+          placeholder="To comment..."
+        />
+        <TouchableOpacity style={styles.commentBtn} onPress={addMassege}>
+          <AntDesign name="arrowup" size={24} color="#FFF" />
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  photo: {
-    height: 240,
-    width: "auto",
-    borderRadius: 8,
-  },
   container: {
     flex: 1,
-    paddingRight: 16,
-    paddingLeft: 22,
-    paddingTop: 32,
-    paddingBottom: 22,
-    backgroundColor: "#ffffff",
+    paddingHorizontal: 16,
+    alignItems: "center",
   },
-  input: {
-    backgroundColor: "#F6F6F6",
-    borderWidth: 1,
-    borderColor: "#E8E8E8",
-    borderRadius: 100,
-    paddingVertical: 16,
-    paddingLeft: 16,
-    position: 'relative'
-  },
-  inputContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  inputBtn: {
-    borderRadius: 50,
-    backgroundColor: "#FF6C00",
-    width: 34,
-    height: 34,
+  image: {
+    marginTop: 32,
+    width: "100%",
+    height: 240,
+    resizeMode: "contain",
+    borderRadius: 8,
+    overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",
   },
+  commentBlock: {
+    marginTop:10,
+  },
+  commentBlockUser: {
+    flexDirection: "row-reverse",
+  },
+  commentBlockFol: {},
+ 
+  comment: {
+    padding: 4,
+    backgroundColor: "rgba(0, 0, 0, 0.02)",
+    borderRadius: 6,
+    width: 320,
+  },
 
-//   arrowBtn:{
-//     flex: 1,
-//     alignItems: 'flex-end',
-//     justifyContent: "center",
-//   }
+  commentText: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  // commentDate: {
+  //   alignSelf: "flex-end",
+  //   color: "#a9a9a9",
+  // },
+  inputBlock: {
+    width: "100%",
+    marginBottom: 15,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+    borderRadius: 28,
+    height: 50,
+    width: "100%",
+    backgroundColor: "#f6f6f6",
+    padding: 16,
+  },
+  commentBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: "#FF6C00",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 10,
+    top: 5,
+  },
 });
