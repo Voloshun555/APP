@@ -19,6 +19,9 @@ export const NewPublication = ({ route, navigation }) => {
     }
   }, [route.params]);
 
+
+
+
   return (
     <ScrollView style={styles.container}>
       <UserInfo />
@@ -37,7 +40,7 @@ export const NewPublication = ({ route, navigation }) => {
               </Text>
             </View>
             <View style={styles.navContainer}>
-              <TouchableOpacity style={styles.comentarContainer}onPress={() =>
+              <TouchableOpacity style={styles.comentarContainer} onPress={() =>
                   navigation.navigate("Comments", {
                     location: item.form.imageUrl,
                   })
@@ -47,6 +50,11 @@ export const NewPublication = ({ route, navigation }) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.locationContainer}
+                onPress={() =>
+                  navigation.navigate("MapScrean", {
+                    location: item.locationName,
+                  })
+                }
                 >
                 <MaterialCommunityIcons
                   name="map-marker-outline"

@@ -84,7 +84,7 @@ export function CreatePostsScreen({ navigation }) {
 
     setForm((prev) => ({
       ...prev,
-      imageUrl,
+      imageUrl
     }));
   };
 
@@ -147,7 +147,7 @@ export function CreatePostsScreen({ navigation }) {
             </View>
             <TouchableOpacity
               onPress={sendPost}
-              disabled={!name && !form && !locationName}
+              disabled={!name || !form || !locationName}
               style={[
                 !name || !form || !locationName
                   ? styles.addPhotoContainer

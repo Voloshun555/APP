@@ -6,6 +6,7 @@ import LoginScreen from "./Screens/LoginScreen/LoginScreen.jsx";
 import { useFonts } from "expo-font";
 import { Home } from "./Screens/home";
 import { Comments } from "./Screens/pageComponent/Сomments.jsx";
+import { MapScrean } from "./Screens/pageComponent/MapScrean.jsx";
 
 const MainStack = createStackNavigator();
 
@@ -36,6 +37,7 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <MainStack.Screen name="Comments" component={Comments} />
+        <MainStack.Screen name="MapScrean" component={MapScrean} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
