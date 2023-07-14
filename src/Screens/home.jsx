@@ -1,20 +1,15 @@
-import { View, Text } from "react-native";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useNavigation } from "@react-navigation/native";
+
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { NewPublication } from "./PostsScreen/newPublication";
 import { CreatePostsScreen } from "./PostsScreen/CreatePostsScreen";
 import { ProfileScreen } from "./PostsScreen/ProfileScreen";
 
-
-
-
 const Tabs = createBottomTabNavigator();
 export const Home = () => {
-  const navigation = useNavigation();
   return (
     <Tabs.Navigator
-    
       screenOptions={({ route, navigation }) => ({
         headerLeft: () => {
           if (
@@ -59,7 +54,7 @@ export const Home = () => {
             iconName = focused ? "ios-add-sharp" : "ios-add-sharp";
           } else if (route.name === "Профіль") {
             iconName = focused ? "person-outline" : "person-outline";
-          } 
+          }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
 
@@ -92,7 +87,6 @@ export const Home = () => {
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
-     
     </Tabs.Navigator>
   );
 };

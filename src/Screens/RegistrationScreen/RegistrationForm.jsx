@@ -9,6 +9,8 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { RegisterUser } from "../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
 export const FormRegistration = () => {
   const navigation = useNavigation();
@@ -22,18 +24,23 @@ export const FormRegistration = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const dispatch = useDispatch()
+
   const onLogin = (e) => {
     e.preventDefault();
-    if (!email || !password || !login) {
-      Alert.alert(`Заповніть форму регістрації пожалуйста`)
-    } else {
-     Alert.alert("Credentials", `${login} + ${email} + ${password}`);
-    }
-    console.log("Credentials", `${login} + ${email} + ${password}`);
+    const userData = {login, password, email}
+    console.log(userData)
+    // dispatch(RegisterUser(userData))
+    // if (!email || !password || !login) {
+    //   Alert.alert(`Заповніть форму регістрації пожалуйста`)
+    // } else {
+    //  Alert.alert("Credentials", `${login} + ${email} + ${password}`);
+    // }
+    // console.log("Credentials", `${login} + ${email} + ${password}`);
     setLogin("");
     setPassword("");
     setEmail("");
-     navigation.navigate("Home")
+    //  navigation.navigate("Home")
   };
 
   useEffect(() => {
