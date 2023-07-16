@@ -14,7 +14,7 @@ import {
   } from "react-native";
   import React from "react";
   import { FormLogin } from "./LoginForm";
-  import SvgAdd from '../image/svgAdd'
+  import SvgAdd from '../../image/svgAdd'
   
  function LoginScreen({ navigation }) {
 
@@ -36,7 +36,7 @@ import {
             <Text style={styles.textRegis}>Увійти</Text>
             <FormLogin/>
             <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
-          <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+          <Text style={styles.text}>Вже є акаунт? Зареєструватись</Text>
         </TouchableOpacity>
           </View>
         </ImageBackground>

@@ -1,7 +1,13 @@
 import { View } from "react-native";
 import { Text, Image, StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export function UserInfo() {
+  const { login, email } = useSelector((state) => state.auth);
+console.log('User', login, email)
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.photoContainer}>
@@ -12,8 +18,8 @@ export function UserInfo() {
           }}
         />
         <View style={{ justifyContent: "center", marginLeft: 8 }}>
-          <Text style={styles.textName}>Solid Solodar</Text>
-          <Text>Solid@gmail.com</Text>
+          <Text style={styles.textName}>{login}</Text>
+          <Text>{email}</Text>
         </View>
       </View>
     </View>
@@ -32,10 +38,10 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 14,
   },
-  textName:{
+  textName: {
     fontSize: 15,
     lineHeight: 15,
-    color: '#212121',
+    color: "#212121",
     fontWeight: 700,
-  }
+  },
 });

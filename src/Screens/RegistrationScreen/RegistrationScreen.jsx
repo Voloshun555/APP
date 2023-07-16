@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import React from "react";
 import { FormRegistration } from "./RegistrationForm";
-import SvgAdd from "../image/svgAdd";
+import SvgAdd from "../../image/svgAdd";
 
 function RegistrationScreen({ navigation }) {
   return (

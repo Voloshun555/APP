@@ -1,13 +1,21 @@
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { NewPublication } from "./PostsScreen/newPublication";
 import { CreatePostsScreen } from "./PostsScreen/CreatePostsScreen";
 import { ProfileScreen } from "./PostsScreen/ProfileScreen";
+import { useDispatch } from "react-redux";
+import { authSignOutUser } from "../redux/auth/authOperations";
+import { TouchableOpacity } from "react-native";
 
 const Tabs = createBottomTabNavigator();
 export const Home = () => {
+
+  const dispatch = useDispatch();
+  const signOut = () => {
+    dispatch(authSignOutUser());
+  };
+
   return (
     <Tabs.Navigator
       screenOptions={({ route, navigation }) => ({
@@ -30,15 +38,14 @@ export const Home = () => {
         headerRight: () => {
           if (route.name === "Публікації" || route.name === "Профіль") {
             return (
-              <Feather
-                name="log-out"
-                size={24}
-                color="#BDBDBD"
-                style={{ marginRight: 21 }}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              />
+              <TouchableOpacity onPress={signOut}>
+                <Feather
+                  name="log-out"
+                  size={24}
+                  color="#BDBDBD"
+                  style={{ marginRight: 21 }}
+                />
+              </TouchableOpacity>
             );
           } else {
             return null;

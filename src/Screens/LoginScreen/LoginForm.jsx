@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import {
   Text,
   TextInput,
-  
   View,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { authSingIn } from "../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
 export const FormLogin = () => {
   const navigation = useNavigation();
@@ -20,17 +21,20 @@ export const FormLogin = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const dispatch = useDispatch()
+
   const onLogin = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      console.log(`Заповніть форму входа`);
-    } else {
-      console.log(`"Credentials", ${email} + ${password}`);
-    }
-    console.log(`"Credentials", ${email} + ${password}`);
+    const userData = { email, password };
+    dispatch(authSingIn(userData));
+    // if (!email || !password) {
+    //   console.log(`Заповніть форму входа`);
+    // } else {
+    //   console.log(`"Credentials", ${email} + ${password}`);
+    // }
+    // console.log(`"Credentials", ${email} + ${password}`);
     setPassword("");
     setEmail("");
-    navigation.navigate("Home")
   };
 
   useEffect(() => {

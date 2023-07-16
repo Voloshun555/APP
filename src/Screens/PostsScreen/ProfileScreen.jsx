@@ -13,9 +13,19 @@ import {
   Image,
 } from "react-native";
 import React from "react";
-import SvgAdd from "../image/svgAdd";
+import SvgAdd from "../../image/svgAdd";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { authSignOutUser } from "../../redux/auth/authOperations";
 export function ProfileScreen({ navigation }) {
+  const { login } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(authSignOutUser());
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : ""}
@@ -35,14 +45,12 @@ export function ProfileScreen({ navigation }) {
                     size={24}
                     color="#BDBDBD"
                     style={styles.logAut}
-                    onPress={() => {
-                      navigation.goBack();
-                    }}
+                    onPress={signOut}
                   />
                 </View>
               </View>
               <View style={styles.userNameContainer}>
-                <Text style={styles.userText}>User Name</Text>
+                <Text style={styles.userText}>{login}</Text>
               </View>
             </View>
           </ImageBackground>

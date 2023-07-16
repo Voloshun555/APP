@@ -7,31 +7,37 @@ import { Home } from "../home";
 import { Comments } from "../pageComponent/Сomments.jsx";
 import { MapScrean } from "../pageComponent/MapScrean.jsx";
 
-const MainStack = createStackNavigator();
 
-export function NavigationApp() {
-  return (
-    <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Registration">
-        <MainStack.Screen
+const AuthStack = createStackNavigator();
+const HomeStack = createStackNavigator();
+
+export function NavigationApp(isAuth) {
+  if (!isAuth) {
+    return (
+      <AuthStack.Navigator>
+        <AuthStack.Screen
           name="Registration"
           component={RegistrationScreen}
           options={{ headerShown: false }}
         />
 
-        <MainStack.Screen
+        <AuthStack.Screen
           name="Login"
           component={LoginScreen}
           options={{ headerShown: false }}
         />
-        <MainStack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen name="Comments" component={Comments} />
-        <MainStack.Screen name="MapScrean" component={MapScrean} />
-      </MainStack.Navigator>
-    </NavigationContainer>
+      </AuthStack.Navigator>
+    );
+  }
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <HomeStack.Screen name="Comments" component={Comments} />
+      <HomeStack.Screen name="MapScrean" component={MapScrean} />
+    </HomeStack.Navigator>
   );
 }

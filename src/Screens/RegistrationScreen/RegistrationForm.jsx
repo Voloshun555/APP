@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { RegisterUser } from "../../redux/auth/authOperations";
+import { authSignUp } from "../../redux/auth/authOperations";
 import { useDispatch } from "react-redux";
 
 export const FormRegistration = () => {
@@ -24,13 +24,13 @@ export const FormRegistration = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onLogin = (e) => {
     e.preventDefault();
-    const userData = {login, password, email}
-    console.log(userData)
-    // dispatch(RegisterUser(userData))
+    const userData = { login, password, email };
+
+    dispatch(authSignUp(userData));
     // if (!email || !password || !login) {
     //   Alert.alert(`Заповніть форму регістрації пожалуйста`)
     // } else {
@@ -40,7 +40,7 @@ export const FormRegistration = () => {
     setLogin("");
     setPassword("");
     setEmail("");
-    //  navigation.navigate("Home")
+    
   };
 
   useEffect(() => {
@@ -51,7 +51,6 @@ export const FormRegistration = () => {
     setShowPassword(!showPassword);
   };
   return (
-    
     <Formik>
       <View style={styles.form}>
         <View>
