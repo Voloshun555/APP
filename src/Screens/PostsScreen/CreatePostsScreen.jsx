@@ -55,6 +55,7 @@ export function CreatePostsScreen({ navigation }) {
   }
 
   const uploadPostToServer = async () => {
+    const createdDate = Date.now();
     await addDoc(collection(db, `setPost`), {
       photo: form.imageUrl,
       name,
@@ -62,7 +63,7 @@ export function CreatePostsScreen({ navigation }) {
       locationName,
       userId,
       login,
-      likes: 0,
+      createdDate,
     });
   };
 

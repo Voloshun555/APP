@@ -12,12 +12,17 @@ import { useEffect, useState } from "react";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { db } from "../../firabase/config";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, query , orderBy} from "firebase/firestore";
 
 export const NewPublication = ({ route, navigation }) => {
   const [items, setItems] = useState([]);
+  console.log(items)
+
+
   const getAllPosts = async () => {
-    const querySnapshot = query(collection(db, "setPost"));
+    const querySnapshot = query(collection(db, "setPost"),
+     orderBy("createdDate")
+    );
     onSnapshot(querySnapshot, (data) => {
       setItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
@@ -52,7 +57,7 @@ export const NewPublication = ({ route, navigation }) => {
                   })
                 }>
                 <FontAwesome name="comments-o" size={24} color="black" />
-                <Text>0</Text>
+                <Text>{item.commentsQuantity ? item.commentsQuantity : "0"}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.locationContainer}

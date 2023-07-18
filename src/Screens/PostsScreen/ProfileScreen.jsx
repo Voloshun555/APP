@@ -24,7 +24,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { authSignOutUser } from "../../redux/auth/authOperations";
 
 import { db, storage } from "../../firabase/config";
-import { collection, query, where, getDocs, orderBy, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
 
 import { FlatList } from "react-native";
 
@@ -33,14 +40,10 @@ export function ProfileScreen({ navigation }) {
 
   const { login, userId } = useSelector((state) => state.auth);
 
- 
-    
- 
-
   const getAllPosts = async () => {
     const postsQuery = query(
       collection(db, "setPost"),
-      where("userId", "==", userId),
+      where("userId", "==", userId)
     );
 
     onSnapshot(postsQuery, (data) => {
@@ -104,6 +107,8 @@ export function ProfileScreen({ navigation }) {
                         onPress={() =>
                           navigation.navigate("Comments", {
                             location: item.photo,
+                            postId: item.id,
+                            autorPostId: item.userId,
                           })
                         }>
                         <FontAwesome
@@ -111,7 +116,7 @@ export function ProfileScreen({ navigation }) {
                           size={24}
                           color="black"
                         />
-                        <Text>0</Text>
+                        <Text>{item.commentsQuantity ? item.commentsQuantity : "0"}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.locationContainer}

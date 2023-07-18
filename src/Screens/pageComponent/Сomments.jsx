@@ -11,24 +11,27 @@ import {
   ImageBackground,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { format, utcToZonedTime } from "date-fns-tz";
+import { uk } from "date-fns/locale";
 
 import {
   collection,
   addDoc,
   query,
-  where,
+  setDoc,
   onSnapshot,
+  orderBy,
+  doc,
 } from "firebase/firestore";
 import { db } from "../../firabase/config";
 import { useSelector } from "react-redux";
 
 export function Comments({ route }) {
-  const { location, postId } = route.params;
+  const { location, postId, autorPostId } = route.params;
   const { login, userId } = useSelector((state) => state.auth);
 
   const [comment, setComment] = useState("");
   const [Massege, setMassege] = useState([]);
-  console.log(Massege)
 
   const addMassege = () => {
     uploadPostToServer();
@@ -36,16 +39,30 @@ export function Comments({ route }) {
   };
 
   const uploadPostToServer = async () => {
+    const date = new Date();
+    const nyDate = utcToZonedTime(date, "Europe/Kiev");
+    const dataPost = format(nyDate, "yyyy-MM-dd HH:mm:ss zzz", {
+      locale: uk,
+    });
+
     await addDoc(collection(db, `setPost`, postId, "setComents"), {
       comment,
       login,
       autorCommentId: userId,
+      dataPost,
     });
+
+    const commentRef = doc(db, `setPost`, postId);
+    await setDoc(
+      commentRef,
+      { commentsQuantity: getAllComments.length + 1 },
+    );
   };
 
   const getAllComments = async () => {
     const commentsQuery = query(
-      collection(db, "setPost", postId, "setComents")
+      collection(db, "setPost", postId, "setComents"),
+      orderBy("dataPost")
     );
 
     onSnapshot(commentsQuery, (data) => {
@@ -69,10 +86,13 @@ export function Comments({ route }) {
       <FlatList
         data={Massege}
         renderItem={({ item }) => (
-          <View style={[styles.commentBlock]}>
+          <View style={[styles.commentBlock, autorPostId === item.autorCommentId ?{marginLeft: 'auto', borderColor: 'green'}:{marginRight: 'auto',borderColor: 'red'}]}>
             <View style={styles.comment}>
-              <Text style={styles.commentText}> name: {item.login}</Text>
-            <Text style={styles.commentText}> Massege: {item.comment}</Text>
+              <Text style={styles.commentText}> автор: {item.login}</Text>
+              <Text style={styles.commentText}>
+                Повідомлення: {item.comment}
+              </Text>
+              <Text style={styles.commentText}>data: {item.dataPost}</Text>
             </View>
           </View>
         )}
@@ -98,7 +118,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    alignItems: "center",
   },
   image: {
     marginTop: 32,
@@ -110,29 +129,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   commentBlock: {
-    marginTop: 10,
+    marginTop: 5,
+    borderWidth: 1,
+    borderRadius: 25,
   },
+
   commentBlockUser: {
     flexDirection: "row-reverse",
   },
-  commentBlockFol: {},
 
   comment: {
     padding: 4,
-    backgroundColor: "rgba(0, 0, 0, 0.02)",
     borderRadius: 6,
-    width: 320,
   },
 
   commentText: {
     fontSize: 16,
     marginBottom: 4,
   },
-  // commentDate: {
-  //   alignSelf: "flex-end",
-  //   color: "#a9a9a9",
-  // },
   inputBlock: {
     width: "100%",
     marginBottom: 15,
