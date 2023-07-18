@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import {
   Text,
@@ -12,41 +12,77 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../firabase/config";
+import { useSelector } from "react-redux";
+
 export function Comments({ route }) {
-  const [textInput, setTextInput] = useState("");
+  const { location, postId } = route.params;
+  const { login, userId } = useSelector((state) => state.auth);
+
+  const [comment, setComment] = useState("");
   const [Massege, setMassege] = useState([]);
+  console.log(Massege)
 
   const addMassege = () => {
-    setMassege([...Massege, textInput]);
-    setTextInput("");
+    uploadPostToServer();
+    setComment("");
   };
+
+  const uploadPostToServer = async () => {
+    await addDoc(collection(db, `setPost`, postId, "setComents"), {
+      comment,
+      login,
+      autorCommentId: userId,
+    });
+  };
+
+  const getAllComments = async () => {
+    const commentsQuery = query(
+      collection(db, "setPost", postId, "setComents")
+    );
+
+    onSnapshot(commentsQuery, (data) => {
+      setMassege(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
+  useEffect(() => {
+    getAllComments();
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.image}>
         <ImageBackground
-          source={{ uri: route.params.location }}
+          source={{ uri: location }}
           style={{ flex: 1, width: "100%", height: "100%" }}
         />
       </View>
 
       <FlatList
         data={Massege}
-      
         renderItem={({ item }) => (
           <View style={[styles.commentBlock]}>
             <View style={styles.comment}>
-              <Text style={styles.commentText}>{item}</Text>
+              <Text style={styles.commentText}> name: {item.login}</Text>
+            <Text style={styles.commentText}> Massege: {item.comment}</Text>
             </View>
           </View>
         )}
       />
-      
+
       <View style={styles.inputBlock}>
         <TextInput
           style={styles.input}
-          onChangeText={(value) => setTextInput(value)}
-          value={textInput}
+          onChangeText={setComment}
+          value={comment}
           textAlign={"left"}
           placeholderTextColor={"#bdbdbd"}
           placeholder="To comment..."
@@ -75,13 +111,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   commentBlock: {
-    marginTop:10,
+    marginTop: 10,
   },
   commentBlockUser: {
     flexDirection: "row-reverse",
   },
   commentBlockFol: {},
- 
+
   comment: {
     padding: 4,
     backgroundColor: "rgba(0, 0, 0, 0.02)",

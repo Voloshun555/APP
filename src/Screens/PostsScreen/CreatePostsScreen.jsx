@@ -16,9 +16,13 @@ import * as MediaLibrary from "expo-media-library";
 import { pickImage } from "../pickImage/PickImage";
 import * as Location from "expo-location";
 
-
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firabase/config";
+import { useSelector } from "react-redux";
 
 export function CreatePostsScreen({ navigation }) {
+  const { userId, login } = useSelector((state) => state.auth);
+
   const [form, setForm] = useState("");
   const [location, setLocation] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
@@ -28,6 +32,7 @@ export function CreatePostsScreen({ navigation }) {
   const [locationPhoto, setLocationPhoto] = useState(null);
   // const [urlPhoto, setUrlPhoto] = useState(null);
   // const { imageUrl: photo } = form;
+
   function ClearPost() {
     setLocationName(null);
     setName(null);
@@ -42,17 +47,24 @@ export function CreatePostsScreen({ navigation }) {
     };
 
     setLocationPhoto(coords);
-
-    navigation.navigate("Публікації", {
-      form,
-      locationName,
-      name,
-      locationPhoto,
-    });
+    uploadPostToServer();
+    navigation.navigate("Публікації");
     setForm("");
     setName(null);
     setLocationName(null);
   }
+
+  const uploadPostToServer = async () => {
+    await addDoc(collection(db, `setPost`), {
+      photo: form.imageUrl,
+      name,
+      location,
+      locationName,
+      userId,
+      login,
+      likes: 0,
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -84,7 +96,7 @@ export function CreatePostsScreen({ navigation }) {
 
     setForm((prev) => ({
       ...prev,
-      imageUrl
+      imageUrl,
     }));
   };
 
@@ -153,11 +165,14 @@ export function CreatePostsScreen({ navigation }) {
                   ? styles.addPhotoContainer
                   : styles.AddBackColor,
               ]}>
-              <Text style={[
-                !name || !form || !locationName
-                  ? styles.addTextPhoto
-                  : styles.AddRextColor,
-              ]}>Опублікувати</Text>
+              <Text
+                style={[
+                  !name || !form || !locationName
+                    ? styles.addTextPhoto
+                    : styles.AddRextColor,
+                ]}>
+                Опублікувати
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.deleteContainer}>
@@ -181,8 +196,8 @@ const styles = StyleSheet.create({
     marginTop: 50,
     color: "#FFFFFF",
   },
-  AddRextColor:{
-color: '#FFFFFF'
+  AddRextColor: {
+    color: "#FFFFFF",
   },
   input: {
     borderBottomWidth: 1,
@@ -192,9 +207,8 @@ color: '#FFFFFF'
     color: "#BDBDBD",
     width: "100%",
     height: 50,
-   
   },
-  inputLocal:{
+  inputLocal: {
     borderBottomWidth: 1,
     fontSize: 16,
     borderBottomColor: "#E8E8E8",
@@ -202,7 +216,7 @@ color: '#FFFFFF'
     color: "#BDBDBD",
     width: "100%",
     height: 50,
-    paddingLeft: 32
+    paddingLeft: 32,
   },
   marker: {
     flex: 1,

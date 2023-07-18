@@ -11,38 +11,44 @@ import { UserInfo } from "./userInfo";
 import { useEffect, useState } from "react";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 
+import { db } from "../../firabase/config";
+import { collection, onSnapshot, query } from "firebase/firestore";
+
 export const NewPublication = ({ route, navigation }) => {
   const [items, setItems] = useState([]);
+  const getAllPosts = async () => {
+    const querySnapshot = query(collection(db, "setPost"));
+    onSnapshot(querySnapshot, (data) => {
+      setItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
   useEffect(() => {
-    if (route.params) {
-      setItems((prev) => [...prev, route.params]);
-    }
-  }, [route.params]);
-
-
-
+    getAllPosts();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
       <UserInfo />
       <FlatList
-      style={styles.containerFlatList}
+        style={styles.containerFlatList}
         data={items}
         renderItem={({ item }) => (
           <View style={{ marginTop: 32, flex: 1 }}>
             <View>
-              <Image
-                source={{ uri: item.form.imageUrl }}
-                style={styles.photo}
-              />
+              <Image source={{ uri: item.photo }} style={styles.photo} />
               <Text style={{ marginTop: 10, marginBottom: 10 }}>
                 Name: {item.name}
               </Text>
             </View>
             <View style={styles.navContainer}>
-              <TouchableOpacity style={styles.comentarContainer} onPress={() =>
+              <TouchableOpacity
+                style={styles.comentarContainer}
+                onPress={() =>
                   navigation.navigate("Comments", {
-                    location: item.form.imageUrl,
+                    location: item.photo,
+                    postId: item.id,
+                    autorPostId: item.userId,
                   })
                 }>
                 <FontAwesome name="comments-o" size={24} color="black" />
@@ -54,8 +60,7 @@ export const NewPublication = ({ route, navigation }) => {
                   navigation.navigate("MapScrean", {
                     location: item.locationName,
                   })
-                }
-                >
+                }>
                 <MaterialCommunityIcons
                   name="map-marker-outline"
                   size={24}
@@ -71,7 +76,7 @@ export const NewPublication = ({ route, navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-  containerFlatList:{
+  containerFlatList: {
     flex: 1,
     paddingBottom: 40,
   },

@@ -8,16 +8,13 @@ import { NavigationApp } from "./navigation/NavigationApp";
 
 const Main = () => {
   const { stateChange } = useSelector((state) => state.auth);
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-useEffect(() => {
-  dispatch(authStateChanged())
-})
+  useEffect(() => {
+    dispatch(authStateChanged());
+  }, []);
 
-
-
-
-  console.log('перевірка онлайн чи ні',stateChange)
+  console.log("перевірка онлайн чи ні", stateChange);
 
   const routing = NavigationApp(stateChange);
 
