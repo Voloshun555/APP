@@ -88,7 +88,7 @@ export function Comments({ route }) {
       <FlatList
         data={Massege}
         renderItem={({ item }) => (
-          <View style={[styles.commentBlock, autorPostId === item.autorCommentId ?{marginLeft: 'auto', borderColor: 'green'}:{marginRight: 'auto',borderColor: 'red'}]}>
+          <View style={[styles.commentBlock, userId === item.autorCommentId ? {marginLeft: 'auto', borderColor: 'green'} :{marginRight: 'auto',borderColor: 'red'}]}>
             <View style={styles.comment}>
               <Text style={styles.commentText}> автор: {item.login}</Text>
               <Text style={styles.commentText}>
