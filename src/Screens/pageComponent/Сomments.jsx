@@ -55,7 +55,9 @@ export function Comments({ route }) {
     const commentRef = doc(db, `setPost`, postId);
     await setDoc(
       commentRef,
-      { commentsQuantity: getAllComments.length + 1 },
+      { commentsQuantity: Massege.length + 1 },
+      { merge: true },
+      { capital: true },
     );
   };
 
