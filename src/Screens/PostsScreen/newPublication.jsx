@@ -41,7 +41,7 @@ export const NewPublication = ({ route, navigation }) => {
         renderItem={({ item }) => (
           <View style={{ marginTop: 32, flex: 1 }}>
             <View>
-              <Image source={{ uri: item.photo }} style={styles.photo} />
+              <Image source={{ uri: item.photos }} style={styles.photo} />
               <Text style={{ marginTop: 10, marginBottom: 10 }}>
                 Name: {item.name}
               </Text>

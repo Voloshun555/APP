@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function UserInfo() {
   const { login, email } = useSelector((state) => state.auth);
-console.log('User', login, email)
   
 
   return (

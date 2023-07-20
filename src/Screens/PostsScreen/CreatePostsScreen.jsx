@@ -17,8 +17,9 @@ import { pickImage } from "../pickImage/PickImage";
 import * as Location from "expo-location";
 
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firabase/config";
+import { db, storage } from "../../firabase/config";
 import { useSelector } from "react-redux";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 
 export function CreatePostsScreen({ navigation }) {
   const { userId, login } = useSelector((state) => state.auth);
@@ -55,6 +56,7 @@ export function CreatePostsScreen({ navigation }) {
   }
 
   const uploadPostToServer = async () => {
+    const photos = await creatPhotoServer();
     const createdDate = Date.now();
     await addDoc(collection(db, `setPost`), {
       photo: form.imageUrl,
@@ -64,6 +66,7 @@ export function CreatePostsScreen({ navigation }) {
       userId,
       login,
       createdDate,
+      photos
     });
   };
 
@@ -100,6 +103,16 @@ export function CreatePostsScreen({ navigation }) {
       imageUrl,
     }));
   };
+
+const creatPhotoServer = async()=>{
+  const response = await fetch(form.imageUrl);
+  const file = await response.blob();
+  const uniquePostId = Date.now().toString();
+  const storageRef = ref(storage, `postImage/${uniquePostId}`);
+  await uploadBytes(storageRef, file);
+  const processedPhoto = await getDownloadURL(storageRef);
+    return processedPhoto;
+}
 
   return (
     <>
